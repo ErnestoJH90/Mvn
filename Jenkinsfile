@@ -22,7 +22,7 @@ pipeline{
             }
             post {
                 success {
-                   bat ' C:\GitHub\Mvn\kt-jen\report.txt'
+                   bat 'mvn clean package > report.txt'
                 }
             }
         }
