@@ -18,7 +18,7 @@ pipeline{
         stage ('Package Mvn Project') {
             steps {
                 
-                bat 'mvn -Dmaven.test.failure.ignore=true install'
+                bat 'mvn clean install'
             }
             post {
                 success {
