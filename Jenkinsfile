@@ -27,7 +27,7 @@ pipeline{
         stage('Delivery'){
             steps{
                 unstash 'Reports'
-                archiveArtifacts: 'Reports.txt', followSymlinks: false
+                archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
         }
     }
