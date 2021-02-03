@@ -1,16 +1,21 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.6.3'
+        maven 'maven 3.6.3'
         jdk 'jdk-15.0.2'
     }
     stages {
+        stage('SCM'){
+            steps{
+               git url: 'https://github.com/ErnestoJH90/Mvn.git'
+            }
+        }
         stage ('Install Mvn') {
             steps {
-                bat '''
+                bat '''sh \'\'\'
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
-                '''
+                \'\'\''''
             }
         }
 
