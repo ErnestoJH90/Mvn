@@ -20,11 +20,11 @@ pipeline{
                 
                 bat 'mvn install'
             }
-            post {
-                success {
-                   bat ' junit /target/surefire-reports/hello/world.xml'
-                }
-            }
+            //post {
+               // success {
+                 //  bat ' junit /target/surefire-reports/hello/world.xml'
+                //}
+           // }
         }
         stage('Mvn version') {
             steps {
@@ -35,6 +35,11 @@ pipeline{
             steps{
                 bat 'mvn test'
               }
+           }
+           psot{
+               always{
+                   cleanWs()
+               }
            }
         }
     }
