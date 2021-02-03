@@ -9,9 +9,8 @@ pipeline{
         }
         stage ('Install Mvn') {
             steps {
-                bat  
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
+                    bat "PATH = ${PATH}"
+                    bat "M2_HOME = ${M2_HOME}"
                 
             }
         }
@@ -36,7 +35,5 @@ pipeline{
                 bat 'mvn test'
               }
            }
-           emailext body: '''
-           scan result is sent''', subject: 'testing', to: 'ernesto.jimenez@softtek.com'
         }
     }
