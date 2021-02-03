@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    tools {
+
        tool name: 'Maven', type: 'maven'
-    }
+    
     stages {
         stage('SCM'){
             steps{
-               git url: 'https://github.com/ErnestoJH90/Mvn.git'
+               git 'https://github.com/ErnestoJH90/Mvn.git'
             }
         }
         stage ('Install Mvn') {
@@ -27,7 +27,7 @@ pipeline {
                    bat ' junit \'target/surefire-reports/**/*.xml\' '
                 }
             }
-        stage('Build') {
+        stage('Mvn version') {
             steps {
                 bat 'mvn -version'
             }
