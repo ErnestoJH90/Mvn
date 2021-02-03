@@ -36,9 +36,9 @@ pipeline{
                 bat 'mvn test'
               }
            }
-            post{
-               always{
-                   cleanWs()
+    post{
+       always{
+          cleanWs()
                }
            }
         }
