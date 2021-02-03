@@ -1,8 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'maven 3.6.3'
-        jdk 'jdk-15.0.2'
+       tool name: 'Maven', type: 'maven'
     }
     stages {
         stage('SCM'){
@@ -21,11 +20,11 @@ pipeline {
 
         stage ('Build') {
             steps {
-                bat 'mvn -Dmaven.test.failure.ignore=true install' 
+                bat 'sh \'mvn -Dmaven.test.failure.ignore=true install\'' 
             }
             post {
                 success {
-                    junit 'target/surefire-reports/**/*.xml' 
+                   bat ' junit \'target/surefire-reports/**/*.xml\' '
                 }
             }
         stage('Build') {
