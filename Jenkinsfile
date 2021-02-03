@@ -12,8 +12,9 @@ pipeline{
         stage ('Build') {
             steps {
                     unstash 'kt-jen'
-                    bat 'cd kt-jen & mvn clean package && java -jar kt-jen > report.txt'
-                    stash includes: 'mvn\kt-jen\target\'
+                    bat 'cd kt-jen && mvn clean package'
+                    bat 'cd kt-jen/target && java -jar kt-jen.jar > report.txt'
+                    stash includes: 'mvn/kt-jen/target/kt-jen/report.txt', name: 'report', allowEmpty: false
                 
             }
         }
