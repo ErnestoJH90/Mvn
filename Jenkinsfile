@@ -24,7 +24,7 @@ pipeline{
                 stash includes: 'kt-jen/target/kt-jen/Reports.txt', name: 'Reports', allowEmpty: false
             }
         }
-        stage(Delivery){
+        stage('Delivery'){
             steps{
                 unstash 'Reports'
                 archiveArtifacts: 'Reports.txt', followSymlinks: false
