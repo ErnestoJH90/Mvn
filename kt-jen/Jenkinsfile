@@ -1,8 +1,6 @@
 pipeline{
     agent any
-        tools{
-            maven 'Maven'
-        }
+
         stages {
         stage('SCM'){
             steps{
@@ -13,7 +11,7 @@ pipeline{
             steps {
                     unstash 'kt-jen'
                     bat 'cd kt-jen & mvn clean package && java -jar kt-jen > report.txt'
-                    stash includes: 'mvn\kt-jen\target\'
+                    stash includes: 'cd kt-jen\target\k'
                 
             }
         }
@@ -21,7 +19,7 @@ pipeline{
         stage ('Package Mvn Project') {
             steps {
                 
-                bat 'mvn clean install'
+                bat 'mvn install'
             }
             post {
                 success {
