@@ -1,5 +1,6 @@
 pipeline{
     agent any{
+
         stages {
         stage('SCM'){
             steps{
@@ -15,7 +16,7 @@ pipeline{
             }
         }
 
-        stage ('Build') {
+        stage ('Build Mvn Project') {
             steps {
                 bat 'mvn -Dmaven.test.failure.ignore=true install'
             }
@@ -24,13 +25,20 @@ pipeline{
                    bat ' junit /target/surefire-reports/**/*.xml '
                 }
             }
+        }
         stage('Mvn version') {
             steps {
                 bat 'mvn -version'
             }
+          }
+        stage('test'){
+            steps{
+                bat 'mvn test'
+              }
+           }
+           emailext body: '''
+           scan result is sent''', subject: 'testing', to: 'ernesto.jimenez@softtek.com'
         }
-        }
-    }
     }
 }
 
