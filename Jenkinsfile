@@ -36,7 +36,7 @@ pipeline{
                 bat 'mvn test'
               }
            }
-           psot{
+           post{
                always{
                    cleanWs()
                }
