@@ -15,14 +15,14 @@ pipeline{
             }
         }
 
-        stage ('Build Mvn Project') {
+        stage ('Package Mvn Project') {
             steps {
-                bat 'mvn archetype:generate'
+                
                 bat 'mvn -Dmaven.test.failure.ignore=true install'
             }
             post {
                 success {
-                   bat ' junit /target/surefire-reports/hello/world.xml '
+                   bat ' junit /target/surefire-reports/hello/world.xml'
                 }
             }
         }
