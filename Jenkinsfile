@@ -8,20 +8,20 @@ pipeline{
         }
         stage ('Install Mvn') {
             steps {
-                bat '''sh \'\'\'
+                bat  
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
-                \'\'\''''
+                
             }
         }
 
         stage ('Build') {
             steps {
-                bat 'sh \'mvn -Dmaven.test.failure.ignore=true install\'' 
+                bat 'mvn -Dmaven.test.failure.ignore=true install'
             }
             post {
                 success {
-                   bat ' junit \'target/surefire-reports/**/*.xml\' '
+                   bat ' junit /target/surefire-reports/**/*.xml '
                 }
             }
         stage('Mvn version') {
