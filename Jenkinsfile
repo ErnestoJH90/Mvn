@@ -22,7 +22,7 @@ pipeline{
             }
             post {
                 success {
-                   bat ' junit /target/surefire-reports/**/*.xml '
+                   bat ' junit /target/surefire-reports/hello/world.xml '
                 }
             }
         }
