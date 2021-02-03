@@ -1,9 +1,6 @@
-pipeline {
-    agent any
-
-       tool name: 'Maven', type: 'maven'
-    
-    stages {
+pipeline{
+    agent any{
+        stages {
         stage('SCM'){
             steps{
                git 'https://github.com/ErnestoJH90/Mvn.git'
@@ -34,4 +31,7 @@ pipeline {
         }
         }
     }
+    }
 }
+
+    
