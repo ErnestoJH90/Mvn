@@ -7,8 +7,8 @@ pipeline{
     stages{
         stage('Checkout'){
             steps{
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ErnestoJH90/Mvn.git']]])
-               stash includes: '', name:'kt-jen', allowEmpty: false
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ErnestoJH90/Mvn']]])
+               
             }
         }
         stage('Mvn Version'){
