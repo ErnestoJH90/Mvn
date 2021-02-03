@@ -18,10 +18,9 @@ pipeline{
         }
         stage('Build'){
             steps{
-                unstash 'kt-jen'
+                
                 bat 'cd kt-jen && mvn clean package'
                 bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
-                stash includes: 'kt-jen/target/kt-jen/Reports.txt', name: 'Reports', allowEmpty: false
             }
         }
         stage('Delivery'){
