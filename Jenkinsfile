@@ -1,5 +1,5 @@
 pipeline{
-    agent any{
+    agent any
 
         stages {
         stage('SCM'){
@@ -40,6 +40,3 @@ pipeline{
            scan result is sent''', subject: 'testing', to: 'ernesto.jimenez@softtek.com'
         }
     }
-}
-
-    
