@@ -18,7 +18,7 @@ pipeline{
         stage ('Package Mvn Project') {
             steps {
                 
-                bat 'mvn clean install'
+                bat 'mvn install'
             }
             post {
                 success {
