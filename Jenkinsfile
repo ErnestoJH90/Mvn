@@ -9,8 +9,8 @@ pipeline{
         }
         stage ('Install Mvn') {
             steps {
-                    bat "PATH = ${PATH}"
-                    bat "M2_HOME = ${M2_HOME}"
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
                 
             }
         }
