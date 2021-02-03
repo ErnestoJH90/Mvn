@@ -17,6 +17,7 @@ pipeline{
 
         stage ('Build Mvn Project') {
             steps {
+                bat 'mvn archetype:generate'
                 bat 'mvn -Dmaven.test.failure.ignore=true install'
             }
             post {
