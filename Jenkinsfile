@@ -20,8 +20,8 @@ pipeline{
             steps{
                 
                 bat 'cd kt-jen && mvn clean package'
-                bat 'java -cp target/kt-jen-1.0-SNAPSHOT.jar com.kt-jen.app.App'
-                bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
+               // bat 'java -cp target/kt-jen-1.0-SNAPSHOT.jar com.kt-jen.app.App'
+                //bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
             }
         }
         stage('Delivery'){
