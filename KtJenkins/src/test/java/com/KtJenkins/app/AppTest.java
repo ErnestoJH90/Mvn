@@ -1,4 +1,4 @@
-package com.kt-jenkins.app;
+package com.KtJenkins.app;
 
 import static org.junit.Assert.assertTrue;
 

@@ -1,5 +1,9 @@
-package com.kt-jen.app;
+package com.KtJenkins.app;
 
+/**
+ * Hello world!
+ *
+ */
 public class App 
 {
     public static void main( String[] args )
