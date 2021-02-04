@@ -20,16 +20,15 @@ pipeline{
             steps{
                 
                 bat 'cd KtJenkins && mvn clean package'
-                bat 'java -cp KtJenkins/target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App'
-                //bat 'cd KtJenkins && java -jar KtJenkins.jar > Reports.txt'
+                bat 'java -cp KtJenkins/target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > Reports.txt'
             }
         }
             
-        /**stage('Delivery'){
+        stage('Delivery'){
             steps{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
-        }**/
+        }
             
     }
     post {
