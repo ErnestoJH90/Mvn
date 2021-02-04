@@ -1,4 +1,4 @@
-package com.ktJenkins.app;
+package com.ktjenkins.app;
 
 /**
  * Hello world!
