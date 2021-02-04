@@ -24,10 +24,10 @@ pipeline{
                 //bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
             }
         }
-        stage('Delivery'){
+        /**stage('Delivery'){
             steps{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
-        }
+        **/}
     }
 }
