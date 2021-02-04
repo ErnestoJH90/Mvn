@@ -19,7 +19,7 @@ pipeline{
         stage('Build'){
             steps{
                 
-                bat 'cd kt-jenkins && mvn clean package'
+                bat 'cd KtJenkins && mvn clean package'
                 //bat 'java -cp target/ktJen-1.0-SNAPSHOT.jar com.ktJen.app.App'
                 //bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
             }
