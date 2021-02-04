@@ -20,8 +20,8 @@ pipeline{
             steps{
                 
                 bat 'cd KtJenkins && mvn clean package'
-                //bat 'java -cp target/ktJen-1.0-SNAPSHOT.jar com.ktJen.app.App'
-                //bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
+                bat 'java -cp KtJenkins/target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App'
+                //bat 'cd KtJenkins && java -jar KtJenkins.jar > Reports.txt'
             }
         }
             
