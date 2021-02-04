@@ -29,5 +29,10 @@ pipeline{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
         }**/
+         post {
+        always {
+          cleanWs()
+             }
+          }
     }
 }
