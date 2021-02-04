@@ -28,6 +28,6 @@ pipeline{
             steps{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
-        **/}
+        }**/
     }
 }
