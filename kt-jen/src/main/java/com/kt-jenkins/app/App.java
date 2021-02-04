@@ -1,4 +1,4 @@
-package com.kt-jenkins.app;
+package com.kt-jen.app;
 
 public class App 
 {

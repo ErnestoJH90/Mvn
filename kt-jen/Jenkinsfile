@@ -24,15 +24,16 @@ pipeline{
                 //bat 'cd kt-jen/target && java -jar kt-jen.jar > Reports.txt'
             }
         }
+            post {
+              always {
+                cleanWs()
+             }
+          }
         /**stage('Delivery'){
             steps{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
         }**/
-         post {
-        always {
-          cleanWs()
-             }
-          }
+            
     }
 }
