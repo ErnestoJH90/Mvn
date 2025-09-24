@@ -5,10 +5,19 @@ pipeline{
         maven 'Mvn'
     }
     stages{
+        stage('ejecutando en el master'){
+            steps{
+                sh 'ip addr show'
+            }
+        }
+        stage('Verify Branch') {
+            steps {
+                echo $GIT_BRANCH
+            }
+        }
         stage('Checkout'){
             steps{
-               checkout scmGit(branches: [[name: '*/LinuxKt']], extensions: [], userRemoteConfigs: [[credentialsId: '78829de0-82f4-4ff1-a6e2-7eb7a5182d5e', url: 'https://github.com/ErnestoJH90/Mvn.git']])
-               
+                checkout scmGit(branches: [[name: '*/LinuxKt']], extensions: [], userRemoteConfigs: [[credentialsId: '78829de0-82f4-4ff1-a6e2-7eb7a5182d5e', url: 'https://github.com/ErnestoJH90/Mvn.git']])
             }
         }
         stage('Mvn Version'){
@@ -18,18 +27,24 @@ pipeline{
         }
         stage('Build'){
             steps{
-                
                 sh 'cd KtJenkins && mvn clean package'
                 sh 'java -cp KtJenkins/target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > Reports.txt'
             }
         }
-            
+        stage('Sonarqube'){
+            steps{
+                sh 'mvn sonar:sonar 
+                    -Dsonar.projectKey=ErnestoJH90_Mvn 
+                    -Dsonar.host.url=http://http://172.18.215.45:9000/ 
+                    -Dsonar.login=admin 
+                    -Dsonar.password=admin'
+            }
+        }
         stage('Delivery'){
             steps{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
             }
         }
-            
     }
     post {
        always {
