@@ -33,10 +33,10 @@ pipeline{
         }
         stage('Sonarqube'){
             steps{
-                sh 'mvn sonar:sonar 
+                sh 'mvn sonar:sonar
                     -Dsonar.projectKey=ErnestoJH90_Mvn 
-                    -Dsonar.host.url=http://http://172.18.215.45:9000/ 
-                    -Dsonar.login=admin 
+                    -Dsonar.host.url=http://http://172.18.215.45:9000/
+                    -Dsonar.login=admin
                     -Dsonar.password=admin'
             }
         }
