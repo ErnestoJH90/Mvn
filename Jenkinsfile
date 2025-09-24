@@ -31,13 +31,10 @@ pipeline{
                 sh 'java -cp KtJenkins/target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > Reports.txt'
             }
         }
-        stage('Sonarqube'){
-            steps{
-                sh 'mvn sonar:sonar
-                    -Dsonar.projectKey=ErnestoJH90_Mvn 
-                    -Dsonar.host.url=http://http://172.18.215.45:9000/
-                    -Dsonar.login=admin
-                    -Dsonar.password=admin'
+        stage('SonarQube Analysis') {
+            def mvn = tool 'Default Maven';
+            withSonarQubeEnv() {
+                sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Mvn -Dsonar.projectName='Mvn'"
             }
         }
         stage('Delivery'){
