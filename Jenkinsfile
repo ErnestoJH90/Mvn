@@ -25,18 +25,24 @@ pipeline{
                 sh 'mvn --version'
             }
         }
-        stage('Build'){
-            steps{
-                sh 'cd KtJenkins && mvn clean package'
-                sh 'java -cp KtJenkins/target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > Reports.txt'
+        stage('Build') {
+            steps {
+                dir('KtJenkins') {
+                    sh 'mvn clean package'
+                    sh 'java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt'
+                }
             }
         }
-        //stage('SonarQube Analysis') {
-          //  def mvn = tool 'Default Maven';
-            //withSonarQubeEnv() {
-              //  sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Mvn -Dsonar.projectName='Mvn'"
-            //}
-        //}
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def mvnHome = tool 'Mvn'
+                    withSonarQubeEnv() {
+                        sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Mvn -Dsonar.projectName='Mvn'"
+                    }
+                }
+            }
+        }
         stage('Delivery'){
             steps{
                 archiveArtifacts artifacts: 'Reports.txt', followSymlinks: false
