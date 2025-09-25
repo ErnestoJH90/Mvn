@@ -35,10 +35,12 @@ pipeline{
         }
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    def mvnHome = tool 'Mvn'
-                    withSonarQubeEnv() {
-                        sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Mvn -Dsonar.projectName='Mvn'"
+                dir('KtJenkins') {
+                    script {
+                        def mvnHome = tool 'Mvn'
+                        withSonarQubeEnv() {
+                            sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Mvn -Dsonar.projectName='Mvn'"
+                        }
                     }
                 }
             }
