@@ -1,13 +1,8 @@
 package com.KtJenkins.app;
-
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        System.out.println( "Bienvenidos al Kt Mvn con Sonarqube!" );
     }
 }
