@@ -5,7 +5,7 @@ pipeline{
         maven 'Mvn'
     }
     stages{
-        stage('ejecutando en el master') {
+        stage('ejecutando en LinuxKt') {
             steps {
                 sh 'ip addr show' // Solo Linux
             }
