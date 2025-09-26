@@ -13,11 +13,11 @@ public class App {
         JFrame frame = new JFrame("Imagen en Java");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // Cambia la ruta por la ubicación de tu imagen
-                ImageIcon icon = new ImageIcon("C:\\Users\\ernesto.jimenez\\OneDrive - Softtek\\Documents\\Pictures\\Firma2.jpeg");
-                JLabel label = new JLabel(icon);
-                frame.getContentPane().add(label);
-                frame.pack();
-                frame.setVisible(true);
-            }
-        }
+        // Cambia la ruta por la ubicación de tu imagen
+        ImageIcon icon = new ImageIcon("C:\\Users\\ernesto.jimenez\\OneDrive - Softtek\\Documents\\Pictures\\Firma2.jpeg");
+        JLabel label = new JLabel(icon);
+        frame.getContentPane().add(label);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
