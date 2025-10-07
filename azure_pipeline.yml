@@ -1,0 +1,41 @@
+trigger:
+- yml
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: ip addr show
+  displayName: 'Mostrar IP (solo Linux)'
+
+- script: echo $(Build.SourceBranch)
+  displayName: 'Verificar rama'
+
+- checkout: self
+  displayName: 'Checkout código'
+
+- script: mvn --version
+  displayName: 'Mostrar versión de Maven'
+
+- script: |
+    cd KtJenkins
+    mvn clean package
+    java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt
+  displayName: 'Build y ejecutar App'
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'SonarQubeServiceConnection' # Cambia por el nombre de tu conexión de servicio
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'Mvn'
+    cliProjectName: 'Mvn'
+
+- script: |
+    cd KtJenkins
+    mvn verify sonar:sonar -Dsonar.projectKey=Mvn -Dsonar.projectName='Mvn'
+  displayName: 'Análisis SonarQube'
+
+- publish: Reports.txt
+  artifact: Reports
+  displayName: 'Publicar Reports.txt como artefacto'
