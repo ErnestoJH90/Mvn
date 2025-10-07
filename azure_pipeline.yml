@@ -25,7 +25,7 @@ steps:
 
 - task: SonarQubePrepare@5
   inputs:
-    SonarQube: 'sonarqube' # Cambia por el nombre de tu conexión de servicio
+    SonarQube: 'http://172.18.215.45:9000/' # Cambia por el nombre de tu conexión de servicio
     scannerMode: 'CLI'
     configMode: 'manual'
     cliProjectKey: 'Mvn'
