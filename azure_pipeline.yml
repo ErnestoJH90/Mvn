@@ -29,9 +29,27 @@ steps:
     java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt
   displayName: 'Build y ejecutar App'
 
-#  Probar acceso a SonarQube
-- script: curl -I http://172.18.215.45:9000/
-  displayName: 'Probar acceso a SonarQube'
+# Probar acceso a SonarQube con retry
+- script: |
+    SONARQUBE_URL="http://172.18.215.45:9000"
+    MAX_RETRIES=3
+    RETRY_DELAY=5
+
+    echo "Probando acceso a SonarQube en $SONARQUBE_URL ..."
+    for i in $(seq 1 $MAX_RETRIES); do
+      HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" $SONARQUBE_URL)
+      if [ "$HTTP_STATUS" -eq 200 ]; then
+        echo "SonarQube está accesible. Código HTTP: $HTTP_STATUS"
+        exit 0
+      else
+        echo "Intento $i: SonarQube no responde correctamente (HTTP $HTTP_STATUS). Reintentando en $RETRY_DELAY segundos..."
+        sleep $RETRY_DELAY
+      fi
+    done
+
+    echo "ERROR: SonarQube no está accesible después de $MAX_RETRIES intentos. Abortando pipeline."
+    exit 1
+  displayName: 'Verificar acceso a SonarQube con retry'
 
 # Ejecutar análisis con SonarQube (requiere que el host e IP sean accesibles)
 - script: |
