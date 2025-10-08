@@ -1,45 +1,71 @@
 trigger:
-- yml
+- Azure_DevOps  # Se ejecuta solo cuando hay cambios en la rama 'yml'
 
 pool:
-  vmImage: ubuntu-latest
+  #vmImage: ubuntu-latest  # Usa un agente Linux en la nube
+  name: LocalAgent # Este es el nombre de tu pool creado en Azure DevOps
+
+variables:
+- group: azure_devops  # Grupo de variables en Azure DevOps
 
 steps:
+
+# Mostrar IP del agente (útil solo si estás debuggeando red)
 - script: ip addr show
   displayName: 'Mostrar IP (solo Linux)'
 
+# Mostrar la rama que disparó el pipeline
 - script: echo $(Build.SourceBranch)
   displayName: 'Verificar rama'
 
+# Hacer checkout del código fuente
 - checkout: self
   displayName: 'Checkout código'
 
+# Mostrar la versión de Maven instalada (útil para debug)
 - script: mvn --version
   displayName: 'Mostrar versión de Maven'
 
+# Compilar y ejecutar la app
 - script: |
     cd KtJenkins
     mvn clean package
     java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt
   displayName: 'Build y ejecutar App'
 
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonarqube' # Cambia por el nombre de tu conexión de servicio
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'Mvn'
-    cliProjectName: 'Mvn'
+# Probar acceso a SonarQube con retry
+- script: |
+    SONARQUBE_URL="http://172.18.215.45:9000"
+    MAX_RETRIES=3
+    RETRY_DELAY=5
 
+    echo "Probando acceso a SonarQube en $SONARQUBE_URL ..."
+    for i in $(seq 1 $MAX_RETRIES); do
+      HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" $SONARQUBE_URL)
+      if [ "$HTTP_STATUS" -eq 200 ]; then
+        echo "SonarQube está accesible. Código HTTP: $HTTP_STATUS"
+        exit 0
+      else
+        echo "Intento $i: SonarQube no responde correctamente (HTTP $HTTP_STATUS). Reintentando en $RETRY_DELAY segundos..."
+        sleep $RETRY_DELAY
+      fi
+    done
+
+    echo "ERROR: SonarQube no está accesible después de $MAX_RETRIES intentos. Abortando pipeline."
+    exit 1
+  displayName: 'Verificar acceso a SonarQube con retry'
+
+# Ejecutar análisis con SonarQube (requiere que el host e IP sean accesibles)
 - script: |
     cd KtJenkins
-    mvn verify sonar:sonar 
-    -Dsonar.projectKey=Mvn 
-    -Dsonar.projectName='Mvn'
-    -Dsonar.host.url=http://172.18.215.45:9000/
-  displayName: 'SonarQube'
-  
+    mvn verify sonar:sonar \
+      -Dsonar.projectKey=Mvn \
+      -Dsonar.projectName='Mvn' \
+      -Dsonar.host.url=http://172.18.215.45:9000 \
+      -Dsonar.login=$(AZURE_SONAR_TOKEN)
+  displayName: 'Análisis con SonarQube'
 
+# Publicar el archivo generado por la app como artefacto
 - publish: Reports.txt
   artifact: Reports
   displayName: 'Publicar Reports.txt como artefacto'
