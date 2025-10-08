@@ -1,38 +1,48 @@
 trigger:
-- yml
+- yml  # Se ejecuta solo cuando hay cambios en la rama 'yml'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-latest  # Usa un agente Linux en la nube
 
 steps:
+
+# Mostrar IP del agente (útil solo si estás debuggeando red)
 - script: ip addr show
   displayName: 'Mostrar IP (solo Linux)'
 
+# Mostrar la rama que disparó el pipeline
 - script: echo $(Build.SourceBranch)
   displayName: 'Verificar rama'
 
+# Hacer checkout del código fuente
 - checkout: self
   displayName: 'Checkout código'
 
+# Mostrar la versión de Maven instalada (útil para debug)
 - script: mvn --version
   displayName: 'Mostrar versión de Maven'
 
+# Compilar y ejecutar la app
 - script: |
     cd KtJenkins
     mvn clean package
     java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt
   displayName: 'Build y ejecutar App'
 
+- script: curl -I http://172.18.215.45:9000/
+  displayName: 'Probar acceso a SonarQube'
+  
+# Ejecutar análisis con SonarQube (requiere que el host e IP sean accesibles)
 - script: |
     cd KtJenkins
-    mvn verify sonar:sonar 
-    -Dsonar.projectKey=Mvn 
-    -Dsonar.projectName='Mvn'
-    -Dsonar.host.url=http://172.18.215.45:9000/
-    -Dsonar.login=$(AZURE_SONAR_TOKEN)
-  displayName: 'SonarQube'
-  
+    mvn verify sonar:sonar \
+      -Dsonar.projectKey=Mvn \
+      -Dsonar.projectName='Mvn' \
+      -Dsonar.host.url=http://172.18.215.45:9000/ \
+      -Dsonar.login=$(AZURE_SONAR_TOKEN)
+  displayName: 'Análisis con SonarQube'
 
+# Publicar el archivo generado por la app como artefacto
 - publish: Reports.txt
   artifact: Reports
   displayName: 'Publicar Reports.txt como artefacto'
