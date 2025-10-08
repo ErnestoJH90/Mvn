@@ -1,5 +1,5 @@
 trigger:
-- yml  # Se ejecuta solo cuando hay cambios en la rama 'yml'
+- Azure_DevOps  # Se ejecuta solo cuando hay cambios en la rama 'yml'
 
 pool:
   #vmImage: ubuntu-latest  # Usa un agente Linux en la nube
