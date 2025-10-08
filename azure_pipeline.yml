@@ -5,6 +5,9 @@ pool:
   #vmImage: ubuntu-latest  # Usa un agente Linux en la nube
   name: LocalAgent # Este es el nombre de tu pool creado en Azure DevOps
 
+variables:
+- group: azure_devops  # Grupo de variables en Azure DevOps
+
 steps:
 
 # Mostrar IP del agente (útil solo si estás debuggeando red)
