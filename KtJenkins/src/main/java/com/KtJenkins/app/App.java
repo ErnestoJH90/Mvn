@@ -14,20 +14,18 @@ public class App {
     public static void main(String[] args) {
 
         try {
-            // Cambiamos aquí el nombre del archivo a Reports.txt
             fileHandler = new FileHandler("Reports.txt", true);
-
             fileHandler.setFormatter(new SimpleFormatter());
 
             logger.addHandler(fileHandler);
 
             logger.setUseParentHandlers(false);
 
-            logger.setLevel(Level.ALL);
-            fileHandler.setLevel(Level.ALL);
+            logger.setLevel(Level.INFO);
+            fileHandler.setLevel(Level.INFO);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al crear FileHandler", e);
         }
 
         logger.severe("Mensaje SEVERE (error grave)");
