@@ -1,10 +1,43 @@
+Este pipeline de Azure DevOps está diseñado para automatizar el proceso de compilación, ejecución y análisis estático de código Java usando Maven y SonarQube, todo al detectar cambios en la rama yml.
+
+🔧 Pasos del pipeline
+Orden	Acción	Descripción.
+
+1️⃣	Mostrar IP	Ejecuta ip addr show para mostrar las interfaces de red del agente (útil para depurar conectividad).
+
+2️⃣	Mostrar rama	Imprime la rama actual que activó el pipeline ($(Build.SourceBranch)).
+
+3️⃣	Checkout	Descarga el código del repositorio (git clone).
+
+4️⃣	Ver versión de Maven	Ejecuta mvn --version para confirmar que Maven está instalado y accesible.
+
+5️⃣	Compilar y ejecutar la app	Usa Maven para compilar el proyecto y luego ejecuta la clase App, redireccionando la salida a Reports.txt.
+
+6️⃣	Verificar acceso a SonarQube	Hace hasta 3 intentos con curl para verificar que SonarQube está corriendo. Si no responde, el pipeline falla aquí.
+
+7️⃣	Análisis con SonarQube	Si el paso anterior tuvo éxito, ejecuta mvn verify sonar:sonar para analizar el código con SonarQube usando el token seguro AZURE_SONAR_TOKEN.
+
+8️⃣	Publicar reporte	Sube Reports.txt como artefacto del pipeline para que puedas descargarlo desde la interfaz de Azure DevOps.
+
+🧩 ¿Qué necesitas para que funcione?
+
+✅ Tener un agente auto-hospedado en línea y conectado a LocalAgent.
+
+✅ El archivo pom.xml debe estar correctamente configurado.
+
+✅ La carpeta KtJenkins debe existir y tener el código Java.
+
+✅ El token AZURE_SONAR_TOKEN debe tener permisos en SonarQube.
+
+✅ SonarQube debe estar accesible desde la red del agente.
+
 1. Trigger
 
 Se activa automáticamente cuando hay cambios en cualquier archivo bajo la carpeta yml (o archivo yml).
 
 2. Pool
 
-Usa una máquina virtual Ubuntu actualizada (ubuntu-latest) para ejecutar las tareas.
+  name: LocalAgent # Este es el nombre de tu pool creado en Azure DevOps
 
 3. Steps (pasos):
 
