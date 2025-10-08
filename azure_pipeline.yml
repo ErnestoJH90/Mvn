@@ -61,7 +61,7 @@ steps:
     mvn verify sonar:sonar \
       -Dsonar.projectKey=Mvn \
       -Dsonar.projectName='Mvn' \
-      -Dsonar.host.url=http://172.18.215.45:9000/ \
+      -Dsonar.host.url=http://172.18.215.45:9000 \
       -Dsonar.login=$(AZURE_SONAR_TOKEN)
   displayName: 'Análisis con SonarQube'
 
