@@ -23,20 +23,13 @@ steps:
     java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt
   displayName: 'Build y ejecutar App'
 
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonarqube' # Cambia por el nombre de tu conexión de servicio
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'Mvn'
-    cliProjectName: 'Mvn'
-
 - script: |
     cd KtJenkins
     mvn verify sonar:sonar 
     -Dsonar.projectKey=Mvn 
     -Dsonar.projectName='Mvn'
     -Dsonar.host.url=http://172.18.215.45:9000/
+    -Dsonar.login=$(AZURE_SONAR_TOKEN)
   displayName: 'SonarQube'
   
 
