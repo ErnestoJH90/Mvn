@@ -29,7 +29,7 @@ steps:
     java -cp target/KtJenkins-1.0-SNAPSHOT.jar com.KtJenkins.app.App > ../Reports.txt
   displayName: 'Build y ejecutar App'
 
-- script: curl -I http://172.18.215.45:9000/
+- script: curl -I http://localhost:9000/
   displayName: 'Probar acceso a SonarQube'
   
 # Ejecutar análisis con SonarQube (requiere que el host e IP sean accesibles)
