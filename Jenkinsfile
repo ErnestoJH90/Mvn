@@ -7,8 +7,7 @@ pipeline{
     stages{
         stage('Checkout'){
             steps{
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ErnestoJH90/Mvn']]])
-               
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'Ernestojh_JenGitHub', url: 'https://github.com/ErnestoJH90/Mvn.git']])
             }
         }
         stage('Mvn Version'){
