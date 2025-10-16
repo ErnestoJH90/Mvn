@@ -65,6 +65,13 @@ steps:
       -Dsonar.login=$(AZURE_SONAR_TOKEN)
   displayName: 'Análisis con SonarQube'
 
+- job: CheckmarkTask
+  displayName: 'Tarea con Checkmark'
+  steps:
+  - script: |
+      echo "✔ Tarea completada exitosamente"
+    displayName: 'Imprimir Checkmark'
+    
 # Publicar el archivo generado por la app como artefacto
 - publish: Reports.txt
   artifact: Reports
