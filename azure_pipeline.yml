@@ -1,5 +1,5 @@
 trigger:
-- Azure_DevOps  # Se ejecuta solo cuando hay cambios en la rama 'yml'
+- Azure_DevOps  # Se ejecuta solo cuando hay cambios en la rama 'Azure_DevOps'
 
 pool:
   #vmImage: ubuntu-latest  # Usa un agente Linux en la nube
@@ -71,7 +71,7 @@ steps:
   - script: |
       echo "✔ Tarea completada exitosamente"
     displayName: 'Imprimir Checkmark'
-    
+
 # Publicar el archivo generado por la app como artefacto
 - publish: Reports.txt
   artifact: Reports
